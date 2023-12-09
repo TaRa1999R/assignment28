@@ -1,6 +1,5 @@
 
 import cv2
-import numpy as np
 
 football_pitch = cv2.imread ("input_images\input_1.jpg")
 light_green = cv2.rectangle (football_pitch, (0 , 0) , (532 , 382) , (0 , 200 , 83) , -1)
