@@ -22,14 +22,12 @@ while True :
         x_face , y_face , w_face , h_face = face
         my_face = fram[x_face : x_face + w_face , y_face : y_face + h_face]
 
-    mirror = cv2.flip (fram[: , fram.shape[1] // 2 : fram.shape[1]] , 1)
-    fram[: , :fram.shape[1] // 2] = mirror
-
     for lip in lips :
         x_lip , y_lip , w_lip , h_lip = lip
 
     for eye in eyes :
         x_eye , y_eye , w_eye , h_eye = eye
+    
     
 
     cv2.imshow ("Webcam Filter" , fram)
