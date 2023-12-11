@@ -47,7 +47,10 @@ while True :
 
     if cv2.waitKey (25) & 0xFF == ord ("4") :
         print ("four")
-        # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
+        mirror = cv2.flip (fram[: , fram.shape[1] // 2 : fram.shape[1]] , 1)
+        fram[: , :fram.shape[1] // 2] = mirror
+        cv2.imshow ("Mirror" , fram)
+        cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
 
     if cv2.waitKey (25) & 0xFF == ord ("q") :
         break
