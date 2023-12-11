@@ -19,36 +19,17 @@ while True :
 
     for face in faces :
         x_face , y_face , w_face , h_face = face
-        my_face = fram [y_face : y_face + h_face , x_face : x_face + w_face]
 
     for lip in lips :
         x_lip , y_lip , w_lip , h_lip = lip
 
     for eye in eyes :
         x_eye , y_eye , w_eye , h_eye = eye
-        
+
+    face = fram[x_face : x_face + w_face , y_face : y_face + h_face]
+    small_face = cv2.resize (face , [20 , 20])
+    larg_face = cv2.resize (small_face , [w_face , h_face] , interpolation = cv2.INTER_NEAREST)
+    fram[x_face : x_face + w_face , y_face : y_face + h_face] = larg_face
     cv2.imshow ("Webcam Filter" , fram)
-    if cv2.waitKey (25) & 0xFF == ord ("1") :
-        print ("one")
-        cv2.resize (stiker , [w_face , h_face])
-        fram[x_face : x_face + w_face , y_face : y_face + h_face] = stiker
-        # cv2.imwrite ("output_images\outout_3_stiker.jpg" , fram)
-
-    if cv2.waitKey (25) & 0xFF == ord ("2") :
-        print("two")
-        # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
-
-    if cv2.waitKey (25) & 0xFF == ord ("3") :
-        print ("three")
-        small_face = cv2.resize (my_face , [10 , 10])
-        larg_face = cv2.resize (small_face , [w_face , h_face] , interpolation = cv2.INTER_NEAREST)
-        fram[x_face : x_face + w_face , y_face : y_face + h_face] = larg_face
-        cv2.imshow ("Chess Board Face" , fram)
-        cv2.imwrite ("output_images\outout_3_chessboard.jpg" , fram)
-
-    if cv2.waitKey (25) & 0xFF == ord ("4") :
-        print ("four")
-        # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
-
     if cv2.waitKey (25) & 0xFF == ord ("q") :
         break
