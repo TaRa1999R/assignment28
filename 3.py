@@ -30,8 +30,9 @@ while True :
     cv2.imshow ("Webcam Filter" , fram)
     if cv2.waitKey (25) & 0xFF == ord ("1") :
         print ("one")
-        cv2.resize (stiker , [w_face , h_face])
-        fram[x_face : x_face + w_face , y_face : y_face + h_face] = stiker
+        small_stiker = cv2.resize (stiker , [w_face , h_face])
+        fram[y_face : y_face + h_face , x_face : x_face + w_face] = small_stiker
+        cv2.imshow ("Stiker On Face" , fram)
         # cv2.imwrite ("output_images\outout_3_stiker.jpg" , fram)
 
     if cv2.waitKey (25) & 0xFF == ord ("2") :

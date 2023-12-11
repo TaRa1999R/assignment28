@@ -1,6 +1,5 @@
 
 import cv2
-import numpy as np
 
 cap = cv2.VideoCapture (0)
 stiker = cv2.imread ("input_images\stiker_panda.png")
@@ -20,15 +19,16 @@ while True :
 
     for face in faces :
         x_face , y_face , w_face , h_face = face
-        my_face = fram[x_face : x_face + w_face , y_face : y_face + h_face]
+        # my_face = fram[x_face : x_face + w_face , y_face : y_face + h_face]
+        small_stiker = cv2.resize (stiker , [w_face , h_face])
+        fram[y_face : y_face + h_face , x_face : x_face + w_face] = small_stiker
+
 
     for lip in lips :
         x_lip , y_lip , w_lip , h_lip = lip
 
     for eye in eyes :
         x_eye , y_eye , w_eye , h_eye = eye
-    
-    
 
     cv2.imshow ("Webcam Filter" , fram)
     if cv2.waitKey (25) & 0xFF == ord ("q") :
