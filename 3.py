@@ -39,7 +39,6 @@ while True :
         # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
     if cv2.waitKey (25) & 0xFF == ord ("3") :
-        print ("three")
         small_face = cv2.resize (my_face , [10 , 10])
         larg_face = cv2.resize (small_face , [w_face , h_face] , interpolation = cv2.INTER_NEAREST)
         fram[x_face : x_face + w_face , y_face : y_face + h_face] = larg_face
