@@ -29,14 +29,18 @@ while True :
         
     cv2.imshow ("Webcam Filter" , fram)
     if cv2.waitKey (25) & 0xFF == ord ("1") :
-        print ("one")
         small_stiker = cv2.resize (stiker , [w_face , h_face])
         fram[y_face : y_face + h_face , x_face : x_face + w_face] = small_stiker
-        cv2.imshow ("Stiker On Face" , fram)
-        # cv2.imwrite ("output_images\outout_3_stiker.jpg" , fram)
+        cv2.imshow ("Stiker on Face" , fram)
+        cv2.imwrite ("output_images\outout_3_stiker.jpg" , fram)
 
     if cv2.waitKey (25) & 0xFF == ord ("2") :
         print("two")
+        small_glasses = cv2.resize (glaases , [w_face , h_eye] )
+        fram [y_eye : y_eye + h_eye , x_eye : x_eye + w_face] = small_glasses
+        # small_lip = cv2.resize (lips , [w_lip , h_lip])
+        # fram [y_lip :y_lip + h_lip , x_lip : x_lip + w_lip] = small_lip
+        cv2.imshow ("Glasses and Lips on Face" , fram)
         # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
     if cv2.waitKey (25) & 0xFF == ord ("3") :
