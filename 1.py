@@ -2,6 +2,7 @@
 import cv2
 
 football_pitch = cv2.imread ("input_images\input_1.jpg")
+print (football_pitch.shape)
 cv2.rectangle (football_pitch, (0 , 0) , (532 , 382) , (0 , 200 , 83) , -1)
 
 start_point = 76
