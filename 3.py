@@ -20,15 +20,15 @@ while True :
     for face in faces :
         x_face , y_face , w_face , h_face = face
         my_face = fram [y_face : y_face + h_face , x_face : x_face + w_face]
-        cv2.rectangle (fram , (x_face , y_face) , (x_face + w_face , y_face + h_face) , (0,0,150) , 2)
+        # cv2.rectangle (fram , (x_face , y_face) , (x_face + w_face , y_face + h_face) , (0,0,150) , 2)
 
     for lip in lips :
         x_lip , y_lip , w_lip , h_lip = lip
-        cv2.rectangle (fram , (x_lip , y_lip) , (x_lip + w_lip , y_lip + h_lip) , (150,0,150) , 2)
+        # cv2.rectangle (fram , (x_lip , y_lip) , (x_lip + w_lip , y_lip + h_lip) , (150,0,150) , 2)
 
     for eye in eyes :
         x_eye , y_eye , w_eye , h_eye = eye
-        cv2.rectangle (fram , (x_face , y_eye) , (x_face + w_face , y_eye + h_eye) , (150,0,0) , 2)
+        # cv2.rectangle (fram , (x_face , y_eye) , (x_face + w_face , y_eye + h_eye) , (150,0,0) , 2)
         
     cv2.imshow ("Webcam Filter" , fram)
     if cv2.waitKey (25) & 0xFF == ord ("1") :
