@@ -78,19 +78,19 @@ while True :
 
     if cv2.waitKey (25) & 0xFF == ord ('1') :
         fram = stiker_face (fram , faces)
-        # cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
+        cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('2') :
         fram = lip_and_eye (fram , faces , eyes , lips)
-        # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
+        cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('3') :
         fram = Checkered_face (fram , faces)
-        # cv2.imwrite ("output_images\outout_3_checkred_face.jpg" , fram)
+        cv2.imwrite ("output_images\outout_3_checkred_face.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('4') :
         fram = mirror (fram)
-        # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
+        cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('q') :
         break
