@@ -39,13 +39,19 @@ def lip_and_eye (img , faces , eyes , lips) :
                     if small_glasses[row][col][0] == 0 and small_glasses[row][col][1] == 0 and small_glasses[row][col][2] == 0 :
                         small_glasses[row][col] = img [ye + row , xe + col]
 
-            img[ye : ye + he , xf : xf + wf] = small_glasses
+            img [ye : ye + he , xf : xf + wf] = small_glasses
     return img
 
 
 def Checkered_face (img , faces) :
-    ...
-
+    for face in faces :
+        xf , yf , wf , hf = face
+        my_face = img [yf : yf + hf , xf : xf + wf]
+        small_face = cv2.resize (my_face , [10 , 10])
+        larg_face = cv2.resize (small_face , [wf , hf] , interpolation = cv2.INTER_NEAREST)
+        img [yf : yf + hf , xf : xf + wf] = larg_face
+    
+    return img
 
 def mirror (img) :
     ...
