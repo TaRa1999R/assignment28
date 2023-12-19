@@ -54,8 +54,9 @@ def Checkered_face (img , faces) :
     return img
 
 def mirror (img) :
-    ...
-
+    flip_part = cv2.flip (img[ : , img.shape[1] // 2 : img.shape[1]] , 1)
+    img [ : , : img.shape[1] // 2] = flip_part
+    return img
     
 cap = cv2.VideoCapture (0)
 
