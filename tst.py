@@ -35,7 +35,7 @@ glaases_stiker = cv2.imread ("input_images\stiker_glasses.png")
 lip_stiker = cv2.imread ("input_images\stiker_lips.png")
 
 face_detectoe = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
-eye_detector = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_eye_tree_eyeglasses.xml")
+eye_detector = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_righteye_2splits.xml")
 lip_detector = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_smile.xml")
 
 while True :
@@ -43,12 +43,8 @@ while True :
     gray_fram = cv2.cvtColor (fram , cv2.COLOR_RGB2GRAY)
 
     faces = face_detectoe.detectMultiScale (gray_fram , scaleFactor = 1.3)
-    eyes = eye_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minSize = (20 , 50) , maxSize = (70 , 200))
-    lips = lip_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 35 , minSize = (50 , 60))
-
-    # for face in faces :
-        # xf,yf,wf,hf = face
-        # cv2.rectangle (fram , (xf , yf) , (xf + wf , yf + hf) , (150 , 0 , 150) , 2)
+    eyes = eye_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 20)
+    lips = lip_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 40)
 
     for eye in eyes :
         xe,ye,we,he = eye
@@ -59,7 +55,6 @@ while True :
         cv2.rectangle (fram , (xl , yl) , (xl + wl , yl + hl) , (150 , 0 , 0) , 2)
 
     if cv2.waitKey (25) & 0xFF == ord ('1') :
-        print ("one")
         fram = stiker_face (fram , faces)
         cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
 
