@@ -16,7 +16,7 @@ def stiker_face (img , faces) :
     return img
     
 
-def lip_and_eye (img , eyes , lips) :
+def lip_and_eye (img , faces , eyes , lips) :
     for lip in lips :
         xl , yl , wl , hl = lip
         small_lip = cv2.resize (lip_stiker , [wl , hl])
@@ -28,6 +28,19 @@ def lip_and_eye (img , eyes , lips) :
         
         img [yl : yl + hl , xl : xl + wl] = small_lip
     
+    for face in faces :
+        xf , _ , wf , _ = face
+
+        for eye in eyes :
+            xe , ye , we , he = eye
+            small_glasses = cv2.resize (glaases_stiker , [wf , he])
+
+            for row in range (he) :
+                for col in range (we) :
+                    if small_glasses[row][col][0] == 0 and small_glasses[row][col][1] == 0 and small_glasses[row][col][2] == 0 :
+                        small_glasses[row][col] = img [ye + row , xe + col]
+
+            img[ye : ye + he , xf : xf + wf] = small_glasses
     return img
 
 
@@ -67,7 +80,7 @@ while True :
         # cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('2') :
-        fram = lip_and_eye (fram , eyes , lips)
+        fram = lip_and_eye (fram , faces , eyes , lips)
         # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('3') :
