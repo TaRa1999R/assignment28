@@ -75,11 +75,6 @@ while True :
     eyes = eye_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 20)
     lips = lip_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 45)
 
-    # for eye in eyes :
-        # xe,ye,we,he = eye
-        # cv2.rectangle (fram , (xe , ye) , (xe + we , ye + he) , (0 , 0 , 150) , 2)
-
-
     if cv2.waitKey (25) & 0xFF == ord ('1') :
         fram = stiker_face (fram , faces)
         # cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
@@ -89,12 +84,10 @@ while True :
         # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('3') :
-        print ("three")
         fram = Checkered_face (fram , faces)
         # cv2.imwrite ("output_images\outout_3_checkred_face.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('4') :
-        print ("four")
         fram = mirror (fram)
         # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
 
