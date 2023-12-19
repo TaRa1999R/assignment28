@@ -1,10 +1,69 @@
 
 import cv2
 
+def stiker_face (img , faces) :
+    for face in faces :
+        xf , yf , wf , hf = face
+        small_emoji = cv2.resize (emoji_stiker , [wf , hf])
+        
+        for i in range (hf) :
+            for j in range (wf) :
+                if small_emoji[i][j][0] == 0 and small_emoji[i][j][1] == 0 and small_emoji[i][j][2] == 0 :
+                    small_emoji[i][j] = img[yf + i , xf + j]
+
+        img [yf : yf + hf , xf : xf + wf] = small_emoji
+    return img
+    
+
+def lip_and_eye (img , faces , eyes , lips) :
+    for lip in lips :
+        xl , yl , wl , hl = lip
+        small_lip = cv2.resize (lip_stiker , [wl , hl])
+
+        for i in range (hl) :
+            for j in range (wl) :
+                if small_lip[i][j][0] == 0 and small_lip[i][j][1] == 0 and small_lip[i][j][2] == 0 :
+                    small_lip[i][j] = img [yl + i , xl + j]
+        
+        img [yl : yl + hl , xl : xl + wl] = small_lip
+    
+    for face in faces :
+        xf , _ , wf , _ = face
+
+        for eye in eyes :
+            xe , ye , we , he = eye
+            small_glasses = cv2.resize (glaases_stiker , [wf , he])
+
+            for row in range (he) :
+                for col in range (we) :
+                    if small_glasses[row][col][0] == 0 and small_glasses[row][col][1] == 0 and small_glasses[row][col][2] == 0 :
+                        small_glasses[row][col] = img [ye + row , xe + col]
+
+            img [ye : ye + he , xf : xf + wf] = small_glasses
+    return img
+
+
+def Checkered_face (img , faces) :
+    for face in faces :
+        xf , yf , wf , hf = face
+        my_face = img [yf : yf + hf , xf : xf + wf]
+        small_face = cv2.resize (my_face , [10 , 10])
+        larg_face = cv2.resize (small_face , [wf , hf] , interpolation = cv2.INTER_NEAREST)
+        img [yf : yf + hf , xf : xf + wf] = larg_face
+    
+    return img
+
+def mirror (img) :
+    flip_part = cv2.flip (img[ : , img.shape[1] // 2 : img.shape[1]] , 1)
+    img [ : , : img.shape[1] // 2] = flip_part
+    return img
+    
 cap = cv2.VideoCapture (0)
-stiker = cv2.imread ("input_images\stiker_panda.png")
-glaases = cv2.imread ("input_images\stiker_glasses.png")
-stiker_lip = cv2.imread ("input_images\stiker_lips.png")
+
+emoji_stiker = cv2.imread ("input_images\stiker_cool.png")
+glaases_stiker = cv2.imread ("input_images\stiker_glasses.png")
+lip_stiker = cv2.imread ("input_images\stiker_lips.png")
+
 face_detectoe = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
 eye_detector = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_righteye_2splits.xml")
 lip_detector = cv2.CascadeClassifier (cv2.data.haarcascades + "haarcascade_smile.xml")
@@ -15,51 +74,25 @@ while True :
 
     faces = face_detectoe.detectMultiScale (gray_fram , scaleFactor = 1.3)
     eyes = eye_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 20)
-    lips = lip_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 35)
+    lips = lip_detector.detectMultiScale (gray_fram , scaleFactor = 1.3 , minNeighbors = 45)
 
-    for face in faces :
-        x_face , y_face , w_face , h_face = face
-        my_face = fram [y_face : y_face + h_face , x_face : x_face + w_face]
-        # cv2.rectangle (fram , (x_face , y_face) , (x_face + w_face , y_face + h_face) , (0,0,150) , 2)
+    if cv2.waitKey (25) & 0xFF == ord ('1') :
+        fram = stiker_face (fram , faces)
+        # cv2.imwrite ("output_images\outout_3_emoji.jpg" , fram)
 
-    for lip in lips :
-        x_lip , y_lip , w_lip , h_lip = lip
-        # cv2.rectangle (fram , (x_lip , y_lip) , (x_lip + w_lip , y_lip + h_lip) , (150,0,150) , 2)
-
-    for eye in eyes :
-        x_eye , y_eye , w_eye , h_eye = eye
-        # cv2.rectangle (fram , (x_face , y_eye) , (x_face + w_face , y_eye + h_eye) , (150,0,0) , 2)
-        
-    cv2.imshow ("Webcam Filter" , fram)
-    if cv2.waitKey (25) & 0xFF == ord ("1") :
-        small_stiker = cv2.resize (stiker , [w_face , h_face])
-        fram[y_face : y_face + h_face , x_face : x_face + w_face] = small_stiker
-        cv2.imshow ("Stiker on Face" , fram)
-        cv2.imwrite ("output_images\outout_3_stiker.jpg" , fram)
-
-    if cv2.waitKey (25) & 0xFF == ord ("2") :
-        small_glasses = cv2.resize (glaases , [w_face , h_eye] )
-        fram [y_eye : y_eye + h_eye , x_eye : x_eye + w_face] = small_glasses
-        small_lip = cv2.resize (stiker_lip , [w_lip , h_lip])
-        # for i in range (small_lip.shape[0]) :
-            # for j in range (small_lip.shape[1]) :
-                # if small_lip[i , j , 0] != 0 and small_lip[i , j , 1] != 0 and small_lip[i , j , 2] != 0:
-                    # fram [y_lip :y_lip + h_lip , x_lip : x_lip + w_lip] = small_lip[i , j]
-        cv2.imshow ("Glasses and Lips on Face" , fram)
+    elif cv2.waitKey (25) & 0xFF == ord ('2') :
+        fram = lip_and_eye (fram , faces , eyes , lips)
         # cv2.imwrite ("output_images\outout_3_glasses&lips.jpg" , fram)
 
-    if cv2.waitKey (25) & 0xFF == ord ("3") :
-        small_face = cv2.resize (my_face , [10 , 10])
-        larg_face = cv2.resize (small_face , [w_face , h_face] , interpolation = cv2.INTER_NEAREST)
-        fram[y_face : y_face + h_face , x_face : x_face + w_face] = larg_face
-        cv2.imshow ("Checkered Face" , fram)
-        cv2.imwrite ("output_images\outout_3_chessboard.jpg" , fram)
+    elif cv2.waitKey (25) & 0xFF == ord ('3') :
+        fram = Checkered_face (fram , faces)
+        # cv2.imwrite ("output_images\outout_3_checkred_face.jpg" , fram)
 
-    if cv2.waitKey (25) & 0xFF == ord ("4") :
-        mirror = cv2.flip (fram[: , fram.shape[1] // 2 : fram.shape[1]] , 1)
-        fram[: , :fram.shape[1] // 2] = mirror
-        cv2.imshow ("Mirror" , fram)
-        cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
+    elif cv2.waitKey (25) & 0xFF == ord ('4') :
+        fram = mirror (fram)
+        # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
 
-    if cv2.waitKey (25) & 0xFF == ord ("q") :
+    elif cv2.waitKey (25) & 0xFF == ord ('q') :
         break
+
+    cv2.imshow ("Webcam Filters" , fram)
