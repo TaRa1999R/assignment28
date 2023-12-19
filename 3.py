@@ -8,7 +8,7 @@ def stiker_face (img , faces) :
         
         for i in range (hf) :
             for j in range (wf) :
-                if small_emoji[i][j][0] == 0 and small_emoji[i][j][1] == 0 and small_emoji[i][j][2] == 0 :
+                if small_emoji[i][j][0] == small_emoji[i][j][1] == small_emoji[i][j][2] == 0 :
                     small_emoji[i][j] = img[yf + i , xf + j]
 
         img [yf : yf + hf , xf : xf + wf] = small_emoji
@@ -22,7 +22,7 @@ def lip_and_eye (img , faces , eyes , lips) :
 
         for i in range (hl) :
             for j in range (wl) :
-                if small_lip[i][j][0] == 0 and small_lip[i][j][1] == 0 and small_lip[i][j][2] == 0 :
+                if small_lip[i][j][0] == small_lip[i][j][1] == small_lip[i][j][2] == 0 :
                     small_lip[i][j] = img [yl + i , xl + j]
         
         img [yl : yl + hl , xl : xl + wl] = small_lip
@@ -32,14 +32,14 @@ def lip_and_eye (img , faces , eyes , lips) :
 
         for eye in eyes :
             xe , ye , we , he = eye
-            small_glasses = cv2.resize (glaases_stiker , [wf , he])
+            small_glasses = cv2.resize (glaases_stiker , [wf , he + 20])
 
-            for row in range (he) :
-                for col in range (we) :
-                    if small_glasses[row][col][0] == 0 and small_glasses[row][col][1] == 0 and small_glasses[row][col][2] == 0 :
-                        small_glasses[row][col] = img [ye + row , xe + col]
+            for row in range (he + 20) :
+                for col in range (wf) :
+                    if small_glasses[row][col][0] == small_glasses[row][col][1] == small_glasses[row][col][2] == 0 :
+                        small_glasses[row][col] = img [ye + row , xf + col]
 
-            img [ye : ye + he , xf : xf + wf] = small_glasses
+            img [ye : ye + he + 20 , xf : xf + wf] = small_glasses
     return img
 
 
