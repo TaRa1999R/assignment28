@@ -1,6 +1,5 @@
 
 import cv2
-import numpy as np
 
 def stiker_face (img , faces) :
     for face in faces :
@@ -44,11 +43,11 @@ def lip_and_eye (img , faces , eyes , lips) :
     return img
 
 
-def Checkered_face () :
+def Checkered_face (img , faces) :
     ...
 
 
-def mirror () :
+def mirror (img) :
     ...
 
     
@@ -85,12 +84,12 @@ while True :
 
     elif cv2.waitKey (25) & 0xFF == ord ('3') :
         print ("three")
-        fram = Checkered_face ()
+        fram = Checkered_face (fram , faces)
         # cv2.imwrite ("output_images\outout_3_checkred_face.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('4') :
         print ("four")
-        fram = mirror ()
+        fram = mirror (fram)
         # cv2.imwrite ("output_images\outout_3_mirror.jpg" , fram)
 
     elif cv2.waitKey (25) & 0xFF == ord ('q') :
